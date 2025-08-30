@@ -23,5 +23,6 @@ public class Homepagetest {
             .andExpect(view().name("home"))       
             .andExpect(content().string(        
                 containsString("Welcome to...")));
+
     }
 }
