@@ -1,5 +1,7 @@
 package com.tacos.tacocloud.web;
 
+import jakarta.validation.Valid;
+import org.springframework.validation.Errors;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -67,8 +69,14 @@ public class DesignTacoController {
             .collect(Collectors.toList());
     }
 
+    // this block of code performs validation of the user's input submitted on TacoOrder objects
+    // similar changes are also required in the processOrder() method of OrderController
     @PostMapping
-    public String processTaco(Taco taco, @ModelAttribute TacoOrder tacoOrder) {
+    public String processTaco(@Valid Taco taco, Errors errors, @ModelAttribute TacoOrder tacoOrder) {
+
+        if (errors.hasErrors()){
+            return "design";
+        }
         tacoOrder.addTaco(taco);
         log.info("Processing taco: {}", taco);
         return "redirect:/orders/current";

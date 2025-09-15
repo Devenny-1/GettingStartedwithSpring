@@ -10,6 +10,9 @@ import org.springframework.web.bind.support.SessionStatus;
 import lombok.extern.slf4j.Slf4j;
 import com.tacos.tacocloud.TacoOrder;
 
+import jakarta.validation.Valid;
+import org.springframework.validation.Errors;
+
 @Slf4j
 @Controller
 @RequestMapping("/orders")
@@ -20,8 +23,16 @@ public class OrderController {
         return "orderForm";
     }
 
+    //  the method below will be allowed to process the submitted data if there are no
+    //validation errors. If there are validation errors, the request will be forwarded to the
+    //form view to give the user a chance to correct their mistakes.
+
     @PostMapping
-    public String processOrder(TacoOrder order, SessionStatus sessionStatus) {
+    public String processOrder(@Valid TacoOrder order, Errors errors, SessionStatus sessionStatus) {
+
+        if (errors.hasErrors()) {
+            return "orderForm";
+        }
         log.info("Order submitted: {}", order);
         sessionStatus.setComplete();
         return "redirect:/";
