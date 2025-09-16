@@ -63,7 +63,7 @@ public class DesignTacoController {
 
     private Iterable<Ingredient> filterByType(
         List<Ingredient> ingredients, Type type) {
-        return ingredients
+        return ingredients 
             .stream()
             .filter(x -> x.getType().equals(type))
             .collect(Collectors.toList());
@@ -71,11 +71,12 @@ public class DesignTacoController {
 
     // this block of code performs validation of the user's input submitted on TacoOrder objects
     // similar changes are also required in the processOrder() method of OrderController
+    
     @PostMapping
     public String processTaco(@Valid Taco taco, Errors errors, @ModelAttribute TacoOrder tacoOrder) {
 
-        if (errors.hasErrors()){
-            return "design";
+      if (errors.hasErrors()){
+        return "design";
         }
         tacoOrder.addTaco(taco);
         log.info("Processing taco: {}", taco);

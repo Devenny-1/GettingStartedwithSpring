@@ -13,13 +13,17 @@ import com.tacos.tacocloud.TacoOrder;
 import jakarta.validation.Valid;
 import org.springframework.validation.Errors;
 
+import org.springframework.ui.Model;
+
 @Slf4j
 @Controller
 @RequestMapping("/orders")
 @SessionAttributes("tacoOrder")
 public class OrderController {
+    
     @GetMapping("/current")
-    public String orderForm() {
+    public String orderForm(Model model) {
+        model.addAttribute("tacoOrder", new TacoOrder());
         return "orderForm";
     }
 
@@ -31,10 +35,10 @@ public class OrderController {
     public String processOrder(@Valid TacoOrder order, Errors errors, SessionStatus sessionStatus) {
 
         if (errors.hasErrors()) {
-            return "orderForm";
+           return "orderForm";
         }
         log.info("Order submitted: {}", order);
         sessionStatus.setComplete();
-        return "redirect:/";
+       return "redirect:/";
     }
 }
