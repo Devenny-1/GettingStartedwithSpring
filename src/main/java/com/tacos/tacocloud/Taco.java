@@ -1,6 +1,10 @@
 package com.tacos.tacocloud;
 
 import java.util.List;
+import java.util.Date;
+
+
+//import org.springframework.format.annotation.DateTimeFormat;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -10,6 +14,9 @@ import lombok.Data;
 
 @Data
 public class Taco {
+    
+    private long id;
+    private Date createdAt = new Date();
 
     @NotNull
     @Size(min=5, message="Name must be at least 5 characters long")
