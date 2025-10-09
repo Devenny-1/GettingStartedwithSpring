@@ -1,4 +1,14 @@
 spring:
     datasource:
-     generate-unique-name: false
-     name: tacocloud
+        generate-unique-name: false
+        name: tacocloud
+
+    jpa:
+        hibernate:
+            ddl-auto: none # Or update, but not create, since you have schema.sql
+
+    sql:
+        init:
+            mode: always
+            schema-locations: classpath:schema.sql
+            data-locations: classpath:data.sql
